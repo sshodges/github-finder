@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import Navbar from './components/layout/Navbar';
-import Users from './components/users/Users';
-import Search from './components/users/Search';
-import './App.css';
-import axios from 'axios';
+import React, { Component } from "react";
+import Navbar from "./components/layout/Navbar";
+import Users from "./components/users/Users";
+import Search from "./components/users/Search";
+import "./App.css";
+import axios from "axios";
 
 class App extends Component {
   state = {
@@ -46,13 +46,26 @@ class App extends Component {
     });
   };
 
+  // Clear users
+  clearUsers = () => {
+    this.setState({
+      loading: false,
+      users: []
+    });
+  };
+
   render() {
+    const { users, loading } = this.state;
     return (
       <div className='App'>
         <Navbar title='Github Finder' />
         <div className='container'>
-          <Search searchUsers={this.searchUsers} />
-          <Users loading={this.state.loading} users={this.state.users} />
+          <Search
+            searchUsers={this.searchUsers}
+            clearUsers={this.clearUsers}
+            showClear={users.length > 0 ? true : false}
+          />
+          <Users loading={loading} users={users} />
         </div>
       </div>
     );
